@@ -1,8 +1,6 @@
 const express = require("express");
 const crypto = require("crypto");
-const numCPUs = require("os").cpus().length;
 
-console.log(numCPUs);
 const app = express();
 
 app.get("/", (req, res) => {
