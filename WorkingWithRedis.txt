@@ -1,0 +1,84 @@
+ // Starting the Redis instance
+ sudo service redis-server start
+
+ // Stopping the redis process
+ sudo service redis-server stop
+
+ // Restart redis process
+ sudo service redis-server restart
+
+
+// Video 51
+ // This testing can be done in node repl env
+ node
+ >
+
+ // import redis into project
+ const redis = require("redis")
+
+ // Initialize redis url
+ const redisUrl = "redis://127.0.0.1:6379"
+
+// Initialize redis with create client and URL parameter
+ const client = redis.createClient(redisUrl)
+
+// Flushing redis keys 
+ client.flushall()
+ 
+ // Setting a key: value pair in redis
+ client.set("hi", "there")
+
+// Returning the value by passing the key and callback function
+ client.get("hi", (err, value) => console.log(value))
+
+// Returning the value by passing the key and console.log for callback parameters
+ client.get("hi", console.log)
+
+ // Video 52
+ // Nested redis hashes
+
+ Example of key value vs hashes in redis using javascript objects
+// Key value
+const redisValues = {
+    hi: "there"
+}
+
+// Hashes
+ const redisValues = {
+    spanish: {
+        red: "rojo",
+        orange: "naranja",
+        blue: "azul"
+    },
+    german: {
+        red: "rot",
+        orange: "orange",
+        blue: "blau"
+    }
+ };
+
+// Setting a hash in redis
+hset("spanish", "red", "rojo")
+
+// Returning values in a hash with callback
+hget("spanish", "red", (err, value) => console.log(value))
+
+// Returning values in a hash with console.log of callback
+hget("spanish", "red", console.log)
+
+// Video 52 Redis Gotcha
+// Redis can only store letters and numbers
+// For Example, this will throw an error is we try to store a JSON object
+
+client.set("colors", {"red": "rojo"}) // Will throw error
+
+// However, we can stringify the object and redis will accept in
+// For Example
+
+client.set("colors", JSON.stringify({"red": "rojo"})) // redis will store this as text
+// Printing the value
+client.get("colors", console.log) // '{"red": "rojo"}'
+
+// We can reterieve the stored text object and parse it back into JSON
+
+client.get("colors", (err, value) => console.log(JSON.parse(value))) // {red: "rojo"}
