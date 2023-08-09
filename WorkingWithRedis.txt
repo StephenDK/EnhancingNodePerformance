@@ -82,3 +82,8 @@ client.get("colors", console.log) // '{"red": "rojo"}'
 // We can reterieve the stored text object and parse it back into JSON
 
 client.get("colors", (err, value) => console.log(JSON.parse(value))) // {red: "rojo"}
+
+
+// Video 57
+// Adding an expiration to a redis key value
+client.set("color", "red", "EX", 5); //EX stands for "expire" and 5 is the number of seconds
